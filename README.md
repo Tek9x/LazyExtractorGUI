@@ -4,10 +4,15 @@
 Allows the Easy extraction of Nintendo Switch NSP and XCI files.
 
 Features:
+* Supports only base NSP files for now
 * Automatically Extracts NSP files and finds the biggest NCA and Titlekey for you.
 
 Soon:
-* Extracts XCI files
+* Add Support to extract XCI files
+* Add Support for Updated NSPs
+* Add Support for Newer NCAs
+* Better Error Handling
+* Better Overall Readable Code
 
 
 Concerns:
