@@ -1,5 +1,6 @@
 # LazyExtractor
 
+![lazy](https://user-images.githubusercontent.com/16065604/57729907-44d38c80-7665-11e9-8c07-f4d1cc3cec9c.gif)
 
 Allows the Easy extraction of Nintendo Switch NSP and XCI files.
 
