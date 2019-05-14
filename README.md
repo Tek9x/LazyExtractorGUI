@@ -19,3 +19,13 @@ Solution:
 Needed Files:
 * Squirrel.exe :: https://github.com/julesontheroad/NSC_BUILDER :: grab it from that release
 * Hactool.exe :: https://github.com/SciresM/hactool :: grab it from that release
+* Python 2.7
+
+HowTo:
+
+* Extract Squirrel and Hactool to the same directory where app.py is.
+* Run app.py
+
+Why:
+* This is my own personal tool i created so i did not have to constantly run commands,
+i decided to release it to the public maybe others might find useful.
