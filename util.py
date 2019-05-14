@@ -4,13 +4,13 @@ import binascii
 
 def find_biggest():
 
-        objects = os.listdir('output_files')
+        objects = os.listdir('game_files/nca')
 
         sofar = 0
         name = ""
 
         for file in objects:
-                size = os.path.getsize(os.path.join('output_files', file))
+                size = os.path.getsize(os.path.join('game_files/nca', file))
                 if size > sofar:
                         sofar = size
                         name = file
@@ -18,14 +18,14 @@ def find_biggest():
 
 def find_tik():
         name = []
-        for file in os.listdir("output_files"):
+        for file in os.listdir("game_files/nca"):
                 if file.endswith(".tik"):
                         name = file
         return name
 
 def find_titlekey(tik):
-        os.listdir('output_files')
-        with open('output_files/' + tik,"rb") as f:
+        os.listdir('game_files/nca')
+        with open('game_files/nca/' + tik,"rb") as f:
                 f.seek(0x180)
                 val = f.read(16)
                 return binascii.hexlify(bytearray(val))

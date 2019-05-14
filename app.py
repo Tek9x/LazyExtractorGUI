@@ -1,6 +1,7 @@
 import PySimpleGUI27 as sg
 import subprocess
 import util
+from os import remove
 
 
 menu_def = [['[F]ile', ['Extract']],['[A]bout']]
@@ -17,8 +18,8 @@ while True:
         filename = sg.PopupGetFile('Open File', no_window=True, file_types=(("Switch File Types", "*.nsp"),))
         if filename is not '':
             print 'Extracting NCA:'
-            print subprocess.check_output(['squirrel', '-ooutput_files','--NSP_copy_nca', '%s' % filename])
-            subprocess.check_output(['squirrel', '-ooutput_files', '--NSP_copy_ticket', '%s' % filename])
+            print subprocess.check_output(['squirrel', '-ogame_files/nca','--NSP_copy_nca', '%s' % filename])
+            subprocess.check_output(['squirrel', '-ogame_files/nca', '--NSP_copy_ticket', '%s' % filename])
             print 'DONE!'
             print 'Checking for Title Key File...'
             keyfile = util.find_tik()
@@ -28,6 +29,7 @@ while True:
             print 'Finding Biggest NCA file...'
             ncafile = util.find_biggest()[0]
             print 'Found Biggest: %s' % ncafile
+            print subprocess.check_output(['hactool','--titlekey=%s' % key, '-t', 'nca', '--romfsdir=game_files/romfs', '--exefsdir=game_files/exefs', 'game_files/nca/%s' % ncafile])
         else:
             print ''
 
