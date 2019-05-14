@@ -17,7 +17,7 @@ while True:
     if event == 'Extract':
         filename = sg.PopupGetFile('Open File', no_window=True, file_types=(("Switch File Types", "*.nsp"),))
         if filename is not '':
-            print 'Extracting NCA:'
+            print 'Extracting NSP:'
             window.Refresh()
             print subprocess.check_output(['squirrel', '-ogame_files/nca','--NSP_copy_nca', '%s' % filename])
             window.Refresh()
@@ -37,8 +37,10 @@ while True:
             window.Refresh()
             ncafile = util.find_biggest()[0]
             print 'Found Biggest: %s' % ncafile
+            print 'Extracting NCA file, PLEASE WAIT..May look like its doing nothing..'
             window.Refresh()
             print subprocess.check_output(['hactool','--titlekey=%s' % key, '-t', 'nca', '--romfsdir=game_files/romfs', '--exefsdir=game_files/exefs', 'game_files/nca/%s' % ncafile])
+            print 'Thanks for waiting, check game_files directory.'
         else:
             print ''
     if event == 'About':
