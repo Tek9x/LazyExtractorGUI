@@ -4,11 +4,11 @@ import util
 from os import remove
 
 
-menu_def = [['[F]ile', ['Extract']],['[A]bout']]
+menu_def = [['[F]ile', ['Extract']],['[M]isc', 'About']]
 
 layout = [[sg.MenuBar(menu_def), sg.Output(size=(60, 5), background_color='Black',text_color='Green', font='None')]]
 
-window = sg.Window('LazyExtractor [Final]').Layout(layout)
+window = sg.Window('LazyExtractor [Alpha]').Layout(layout)
 
 while True:
     event, value = window.Read()
@@ -18,20 +18,31 @@ while True:
         filename = sg.PopupGetFile('Open File', no_window=True, file_types=(("Switch File Types", "*.nsp"),))
         if filename is not '':
             print 'Extracting NCA:'
+            window.Refresh()
             print subprocess.check_output(['squirrel', '-ogame_files/nca','--NSP_copy_nca', '%s' % filename])
+            window.Refresh()
             subprocess.check_output(['squirrel', '-ogame_files/nca', '--NSP_copy_ticket', '%s' % filename])
+            window.Refresh()
             print 'DONE!'
+            window.Refresh()
             print 'Checking for Title Key File...'
             keyfile = util.find_tik()
+            window.Refresh()
             print 'Grabbing title key for you...'
+            window.Refresh()
             key = util.find_titlekey(keyfile)
             print 'title key found: %s' % key
+            window.Refresh()
             print 'Finding Biggest NCA file...'
+            window.Refresh()
             ncafile = util.find_biggest()[0]
             print 'Found Biggest: %s' % ncafile
+            window.Refresh()
             print subprocess.check_output(['hactool','--titlekey=%s' % key, '-t', 'nca', '--romfsdir=game_files/romfs', '--exefsdir=game_files/exefs', 'game_files/nca/%s' % ncafile])
         else:
             print ''
+    if event == 'About':
+        print 'LazyExtracter\n version: 0.1A\n Description: Allows the extraction of NSP and XCI Nintendo Switch files'
 
 
 
