@@ -4,7 +4,7 @@ import util
 from os import remove
 
 
-menu_def = [['[F]ile', ['Extract']],['[M]isc', 'About']]
+menu_def = [['[F]ile', ['Extract',['NSP', 'XCI']]],['[M]isc', 'About']]
 
 layout = [[sg.MenuBar(menu_def), sg.Output(size=(60, 5), background_color='Black',text_color='Green', font='None')]]
 
@@ -14,7 +14,7 @@ while True:
     event, value = window.Read()
     if event is None or event == 'Exit':
         break
-    if event == 'Extract':
+    if event == 'NSP':
         filename = sg.PopupGetFile('Open File', no_window=True, file_types=(("Switch File Types", "*.nsp"),))
         if filename is not '':
             print 'Extracting NSP:'
@@ -43,8 +43,16 @@ while True:
             print 'Thanks for waiting, check game_files directory.'
         else:
             print ''
+    if event == 'XCI':
+        filename = sg.PopupGetFile('Open File', no_window=True, file_types=(("Switch File Types", "*.xci"),))
+        subprocess.check_output(['hactool', '-k keys.txt', '-t', 'xci', '--outdir=game_files', '%s' % filename])
+        ncafile = util.find_biggest()
+        subprocess.check_output(['hactool', '-k keys.txt', '-t', 'xci', '--romfsdir=game_files/romfs','--exefsdir=game_files/exefs', '%s' % ncafile])
+
+
+
     if event == 'About':
-        print 'LazyExtracter\n version: 0.1A\n Description: Allows the extraction of NSP and XCI Nintendo Switch files'
+        print 'LazyExtracter\n version: 0.2A\n Description: Allows the extraction of NSP and XCI Nintendo Switch files'
 
 
 
