@@ -11,7 +11,7 @@ Features:
 Soon:
 * Add Support to extract XCI files
 * Add Support for Updated NSPs
-:white_check_mark: Add Support for Newer NCAs
+*:white_check_mark: Add Support for Newer NCAs
 * Better Error Handling
 * Better Overall Readable Code
 
