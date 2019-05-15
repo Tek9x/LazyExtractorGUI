@@ -22,6 +22,7 @@ while True:
             print subprocess.check_output(['squirrel', '-ogame_files/nca','--NSP_copy_nca', '%s' % filename])
             window.Refresh()
             subprocess.check_output(['squirrel', '-ogame_files/nca', '--NSP_copy_ticket', '%s' % filename])
+            subprocess.check_output(['squirrel', '-ogame_files/nca', '--NSP_copy_xml', '%s' % filename])
             window.Refresh()
             print 'DONE!'
             window.Refresh()
@@ -33,14 +34,28 @@ while True:
             key = util.find_titlekey(keyfile)
             print 'title key found: %s' % key
             window.Refresh()
-            print 'Finding Biggest NCA file...'
-            window.Refresh()
-            ncafile = util.find_biggest()[0]
-            print 'Found Biggest: %s' % ncafile
-            print 'Extracting NCA file, PLEASE WAIT..May look like its doing nothing..'
-            window.Refresh()
-            print subprocess.check_output(['hactool','-k keys.txt', '--titlekey=%s' % key, '-t', 'nca', '--romfsdir=game_files/romfs', '--exefsdir=game_files/exefs', 'game_files/nca/%s' % ncafile])
-            print 'Thanks for waiting, check game_files directory.'
+            print 'Searching for Xml File...'
+            if not util.xml_check():
+                print 'No XML file found, Trying Biggest NCA File'
+                print 'Finding Biggest NCA file...'
+                window.Refresh()
+                ncafile = util.find_biggest()[0]
+                print 'Found Biggest: %s' % ncafile
+                print 'Extracting NCA file, PLEASE WAIT..May look like its doing nothing..'
+                window.Refresh()
+                print subprocess.check_output(['hactool','-k keys.txt', '--titlekey=%s' % key, '-t', 'nca', '--romfsdir=game_files/romfs', '--exefsdir=game_files/exefs', 'game_files/nca/%s' % ncafile])
+                print 'Thanks for waiting, check game_files directory.'
+            else:
+                print 'Parsing NSP XML file...'
+                xmlnca = util.xml_check()
+                print 'Extracting NCA file, PLEASE WAIT..May look like its doing nothing..'
+                print subprocess.check_output(
+                    ['hactool', '-k keys.txt', '--titlekey=%s' % key, '-t', 'nca', '--romfsdir=game_files/romfs',
+                     '--exefsdir=game_files/exefs', 'game_files/nca/%s' % xmlnca])
+                print 'Thanks for waiting, check game_files directory.'
+
+
+
         else:
             print ''
     if event == 'XCI':

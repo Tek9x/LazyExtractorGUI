@@ -1,6 +1,7 @@
 import os
 import binascii
-
+from untangle import parse
+from xml.etree import ElementTree
 
 def find_biggest():
 
@@ -29,3 +30,18 @@ def find_titlekey(tik):
                 f.seek(0x180)
                 val = f.read(16)
                 return binascii.hexlify(bytearray(val))
+
+def xml_check():
+        xml = []
+        for file in os.listdir('game_files/nca'):
+                if file.endswith('.xml'):
+                        xml = os.path.join('game_files/nca', file)
+                        obj = parse(xml)
+                        tf = obj.ContentMeta.Content[0].Type.cdata
+                        nca = obj.ContentMeta.Content[0].Id.cdata
+                        if tf == 'Program':
+                                return nca + '.nca'
+                        else:
+                                return False
+
+
