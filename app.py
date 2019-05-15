@@ -63,7 +63,7 @@ while True:
         subprocess.check_output(['hactool', '-k keys.txt', '-t', 'xci', '--romfsdir=game_files/romfs','--exefsdir=game_files/exefs', '%s' % ncafile])
 
     if event == 'About':
-        print 'LazyExtracter\n version: 0.2A\n Description: Allows the extraction of NSP and XCI Nintendo Switch files'
+        print 'LazyExtracter\n version: 0.3A\n Description: Allows the extraction of NSP and XCI Nintendo Switch files'
 
 
 
