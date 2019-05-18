@@ -17,6 +17,20 @@ def find_biggest():
                         name = file
         return name, sofar
 
+def find_biggest_xci():
+
+        objects = os.listdir('game_files/secure')
+
+        sofar = 0
+        name = ""
+
+        for file in objects:
+                size = os.path.getsize(os.path.join('game_files/secure', file))
+                if size > sofar:
+                        sofar = size
+                        name = file
+        return name, sofar
+
 def find_tik():
         name = []
         for file in os.listdir("game_files/nca"):

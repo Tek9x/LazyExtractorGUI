@@ -1,7 +1,8 @@
 import PySimpleGUI27 as sg
 import subprocess
 import util
-from os import remove
+import os
+
 
 
 menu_def = [['[F]ile', ['Extract',['NSP', 'XCI']]],['[M]isc', 'About']]
@@ -43,24 +44,27 @@ while True:
                 print 'Found Biggest: %s' % ncafile
                 print 'Extracting NCA file, PLEASE WAIT..May look like its doing nothing..'
                 window.Refresh()
-                print subprocess.check_output(['hactool','-k keys.txt', '--titlekey=%s' % key, '-t', 'nca', '--romfsdir=game_files/romfs', '--exefsdir=game_files/exefs', 'game_files/nca/%s' % ncafile])
+                print subprocess.check_output(['hactool','-k keys.txt', '--titlekey=%s' % key, '-t', 'nca', '--romfsdir=game_files/romfs', '--exefsdir=game_files/exefs', 'game_files/nca/%s' % ncafile],stderr=subprocess.STDOUT)
+                window.Refresh()
                 print 'Thanks for waiting, check game_files directory.'
             else:
                 print 'Parsing NSP XML file...'
                 xmlnca = util.xml_check()
                 print 'Extracting NCA file, PLEASE WAIT..May look like its doing nothing..'
+                window.Refresh()
                 print subprocess.check_output(
                     ['hactool', '-k keys.txt', '--titlekey=%s' % key, '-t', 'nca', '--romfsdir=game_files/romfs',
-                     '--exefsdir=game_files/exefs', 'game_files/nca/%s' % xmlnca])
+                     '--exefsdir=game_files/exefs', 'game_files/nca/%s' % xmlnca], stderr=subprocess.STDOUT)
+                window.Refresh()
                 print 'Thanks for waiting, check game_files directory.'
     else:
         print ''
 
     if event == 'XCI':
         filename = sg.PopupGetFile('Open File', no_window=True, file_types=(("Switch File Types", "*.xci"),))
-        subprocess.check_output(['hactool', '-k keys.txt', '-t', 'xci', '--outdir=game_files', '%s' % filename])
-        ncafile = util.find_biggest()
-        subprocess.check_output(['hactool', '-k keys.txt', '-t', 'xci', '--romfsdir=game_files/romfs','--exefsdir=game_files/exefs', '%s' % ncafile])
+        print subprocess.check_output(['hactool', '-k keys.txt', '-t', 'xci', '--outdir=game_files', '%s' % filename] )
+        ncafile = util.find_biggest_xci()[0]
+        print  subprocess.check_output(['hactool', '-k keys.txt', '-t', 'xci', '--romfsdir=game_files/romfs','--exefsdir=game_files/exefs', '%s' % ncafile])
 
     if event == 'About':
         print 'LazyExtracter\n version: 0.3A\n Description: Allows the extraction of NSP and XCI Nintendo Switch files'
